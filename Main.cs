@@ -10,15 +10,14 @@ using RidersX;
 using System.IO;
 using System.Reflection;
 
+//Code by Riz#1406
+
 namespace CustomBoards
 {
     public class BoardMod : MelonMod
     {
         AssetLoad AssetMain = new AssetLoad();
         GameObject board;
-        //TODO:
-        //blue star 2 trails board possible?
-        //multi-trail board
 
         //delay on scene load counter
         int[] counter = { 1, 0 };
