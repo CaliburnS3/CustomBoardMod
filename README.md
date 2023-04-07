@@ -10,14 +10,15 @@ This includes a .dll file, which is code I have already built, if you do not tru
 
 Requirements:
 
-Sonic Riders X
+* Sonic Riders X
 Discord: https://discord.gg/6Zh75dhrZW
 Direct: https://drive.google.com/file/d/1bq8q9GaONboGsPkHGVLS4EMvX0qi3JZC/view?usp=sharing
-MelonLoader v0.5.7
+* MelonLoader v0.5.7
 Download: https://github.com/LavaGang/MelonLoader/releases/tag/v0.5.7
 Guide: https://github.com/LavaGang/MelonLoader#how-to-use-the-installer
-A resource pack to replace board models, other packs may be found in Riders X discord.
+* A resource pack to replace board models, other packs may be found in Riders X discord.
 Download: https://www.dropbox.com/s/kquwyek1t7tsk27/Resources.zip?dl=0
+
 Installation Guide:
 
 Download Sonic Riders X, extract it, and play it at least once.
