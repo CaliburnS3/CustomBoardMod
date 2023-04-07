@@ -6,7 +6,7 @@ using CustomBoards; // The namespace of your mod class
 
 
 // ...
-[assembly: MelonInfo(typeof(BoardMod), "CustomBoards", "1.1.0", "RizS3")]
+[assembly: MelonInfo(typeof(BoardMod), "CustomBoards", "1.1.0", "Riz#0119")]
 [assembly: MelonGame("", "")]
 
 // General Information about an assembly is controlled through the following
