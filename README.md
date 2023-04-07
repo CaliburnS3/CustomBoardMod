@@ -21,10 +21,8 @@ Download: https://www.dropbox.com/s/kquwyek1t7tsk27/Resources.zip?dl=0
 
 Installation Guide:
 
-Download Sonic Riders X, extract it, and play it at least once.
-Download and install MelonLoader v0.5.7.
-After installing MelonLoader on Sonic Riders X, there should now exist a "Mods" folder.
-Download resourcepack and place extracted folder in the "Mods" folder.
-Put the CustomBoards.dll in the "Mods" folder.
-If done correctly, you should have something like this
-Screenshot 2023-04-06 143616
+* Download Sonic Riders X, extract it, and play it at least once.
+* Download and install MelonLoader v0.5.7.
+* After installing MelonLoader on Sonic Riders X, there should now exist a "Mods" folder.
+* Download resourcepack and place extracted folder in the "Mods" folder.
+* Put the CustomBoards.dll in the "Mods" folder.
