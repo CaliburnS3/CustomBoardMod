@@ -11,7 +11,7 @@ This includes a .dll file, which is code I have already built, if you do not tru
 Requirements:
 
 * Sonic Riders X
-Discord: https://discord.gg/6Zh75dhrZW
+Discord: https://discord.gg/zfKBksRUtH
 Direct: https://drive.google.com/file/d/1bq8q9GaONboGsPkHGVLS4EMvX0qi3JZC/view?usp=sharing
 * MelonLoader v0.5.7
 Download: https://github.com/LavaGang/MelonLoader/releases/tag/v0.5.7
