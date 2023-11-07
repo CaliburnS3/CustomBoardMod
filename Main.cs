@@ -155,6 +155,10 @@ namespace CustomBoards
 
         public void StageBoardLoadMethod(string boardName_0, string boardName_1)
         {
+            //Goodbye Camera Box
+            GameObject destroyed = GameObject.Find("PhotoModeBounds");
+            destroyed.transform.localScale += new Vector3(10.1f, 10.1f, 10.1f);
+
             GameObject BoardTemp = AssetLoadMethod(boardName_0);
             //customBoard, startBoard
             //temp[0], temp[1]
