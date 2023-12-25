@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +17,17 @@ namespace CustomBoards
     public class BoardMod : MelonMod
     {
         AssetLoad AssetMain = new AssetLoad();
+        RidersX.FX.BetterTrail trailName;
+        int trailRef = 0;
+        GameObject bActivate = null;
+        GameObject bDeactivate = null;
         GameObject board;
+
 
         //delay on scene load counter
         int[] counter = { 1, 0 };
         //This is the name of the board to search and replace
-        public string[,] boardNames = new string[1,2];
+        public string[,] boardNames = new string[1, 2];
 
         int sceneIndex = 0;
 
@@ -30,6 +35,7 @@ namespace CustomBoards
         {
             base.OnInitializeMelon();
         }
+
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
@@ -43,6 +49,7 @@ namespace CustomBoards
 
         public override void OnUpdate()
         {
+
             if (counter[0] == counter[1])
             {
                 counter[1]++;
@@ -50,14 +57,52 @@ namespace CustomBoards
                 boardNames = AssetMain.fileRead();
                 for (int i = 0; i < boardNames.GetLength(0); i++)
                 {
-                    board = GameObject.Find(boardNames[i,1]);
+                    board = GameObject.Find(boardNames[i, 1]);
                     if (board != null)
                     {
-                        AssetMain.StageBoardLoadMethod(boardNames[i,0], boardNames[i,1]);
+                        AssetMain.StageBoardLoadMethod(boardNames[i, 0], boardNames[i, 1]);
                     }
                 }
+                if (GameObject.Find("Trail").GetComponent<RidersX.FX.BetterTrail>())
+                {
+                    trailName = GameObject.Find("Trail").GetComponent<RidersX.FX.BetterTrail>();
+                    trailRef = 1;
+
+                    if (GameObject.Find("BoardActivate"))
+                    {
+                        bActivate = GameObject.Find("BoardActivate");
+                        bActivate.SetActive(false);
+                    }
+
+
+                    if (GameObject.Find("BoardDeactivate"))
+                    {
+                        bDeactivate = GameObject.Find("BoardDeactivate");
+                        bDeactivate.SetActive(true);
+                    }
+                }
+
             }
-            if(counter[0] > counter[1])
+
+
+            if (trailRef == 1)
+            {
+                if (trailName.enabled == true)
+                {
+                    //this should trigger when starting race\
+                    trailRef = 0;
+                    bActivate.SetActive(true);
+                    bDeactivate.SetActive(false);
+
+                }
+
+            }
+
+
+
+
+
+            if (counter[0] > counter[1])
             {
                 counter[1]++;
             }
@@ -65,9 +110,8 @@ namespace CustomBoards
             {
                 AssetMain.printFunction();
             }
-
             //changes values to allow for menu board to change again
-            if(sceneIndex == 0 && GameObject.Find("2D Gear"))
+            if (sceneIndex == 0 && GameObject.Find("2D Gear"))
             {
                 sceneIndex = 1;
             }
@@ -86,10 +130,10 @@ namespace CustomBoards
         public void printFunction()
         {
             //Print all game objects in scene
-            GameObject[] tester = FindObjectsOfType<GameObject>();
-            for(int i = 0; i < tester.Length; i++)
+            Renderer[] tester = FindObjectsOfType<Renderer>();
+            for (int i = 0; i < tester.Length; i++)
             {
-                MelonLogger.Msg(tester[i].name);
+                MelonLogger.Msg(tester[i].gameObject.name);
             }
         }
 
@@ -122,8 +166,8 @@ namespace CustomBoards
             codeFilePath = Path.GetDirectoryName(codeFilePath);
             codeFilePath += @"\Resources\";
             string[] fileArray = Directory.GetFiles(codeFilePath);
-            string[,] boardNames = new string[fileArray.GetLength(0),2];
-            for(int i = 0; i < fileArray.GetLength(0); i++)
+            string[,] boardNames = new string[fileArray.GetLength(0), 2];
+            for (int i = 0; i < fileArray.GetLength(0); i++)
             {
                 //split string to get just board name, then build with board names
                 fileArray[i] = Path.GetFileName(fileArray[i]);
@@ -133,7 +177,7 @@ namespace CustomBoards
             return boardNames;
         }
 
-        public GameObject AssetLoadMethod(string boardName_0) 
+        public GameObject AssetLoadMethod(string boardName_0)
         {
             //Load file from resource folder with the name given by boardName_0
             string codeFilePath = Assembly.GetExecutingAssembly().Location;
