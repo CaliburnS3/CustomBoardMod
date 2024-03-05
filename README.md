@@ -28,7 +28,7 @@ Installation Guide:
 * Put the CustomBoards.dll in the "Mods" folder.
 
 In Case of Melon Loader API Issues:
-Recently a situation where MelonLoader was having remote api issues. In that case:
+
 * Open command prompt
 * drop Sonic Riders X into the prompt
 * then add "--melonloader.agfoffline" after it
