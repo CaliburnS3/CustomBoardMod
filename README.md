@@ -26,3 +26,10 @@ Installation Guide:
 * After installing MelonLoader on Sonic Riders X, there should now exist a "Mods" folder.
 * Download resourcepack and place extracted folder in the "Mods" folder.
 * Put the CustomBoards.dll in the "Mods" folder.
+
+In Case of Melon Loader API Issues:
+Recently a situation where MelonLoader was having remote api issues. In that case:
+* Open command prompt
+* drop Sonic Riders X into the prompt
+* then add "--melonloader.agfoffline" after it
+* that should run the game and get around the api issues.
