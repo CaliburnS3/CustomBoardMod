@@ -8,6 +8,7 @@ using UnityEditor;
 using MelonLoader;
 using RidersX;
 using System.IO;
+using System.Drawing;
 using System.Reflection;
 
 //Code by Riz#0119
@@ -16,26 +17,32 @@ namespace CustomBoards
 {
     public class BoardMod : MelonMod
     {
+        //Mod Essentials
         AssetLoad AssetMain = new AssetLoad();
-        RidersX.FX.BetterTrail trailName;
-        int trailRef = 0;
-        GameObject bActivate = null;
-        GameObject bDeactivate = null;
+        int sceneIndex = 0;
         GameObject board;
-
-
         //delay on scene load counter
         int[] counter = { 1, 0 };
         //This is the name of the board to search and replace
         public string[,] boardNames = new string[1, 2];
 
-        int sceneIndex = 0;
+        //Transformatives
+        GameObject bActivate = null;
+        GameObject bDeactivate = null;
+
+        //Rainbow Trail
+        int trailEnabledStatus = 0;
+        bool rainbowTrail;
+        System.Random colorRand = new System.Random();
+
+        //References
+        RidersX.FX.BetterTrail trailRef;
+        GearData gearDataRef;
 
         public override void OnInitializeMelon()
         {
             base.OnInitializeMelon();
         }
-
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
@@ -43,13 +50,15 @@ namespace CustomBoards
             base.OnSceneWasLoaded(buildIndex, sceneName);
             MelonLogger.Msg(buildIndex + ":" + sceneName);
             counter[1] = 0;
+            trailEnabledStatus = 0;
+            rainbowTrail = false;
+            gearDataRef = null;
             board = null;
             sceneIndex = buildIndex;
         }
 
         public override void OnUpdate()
         {
-
             if (counter[0] == counter[1])
             {
                 counter[1]++;
@@ -63,18 +72,25 @@ namespace CustomBoards
                         AssetMain.StageBoardLoadMethod(boardNames[i, 0], boardNames[i, 1]);
                     }
                 }
-                if (GameObject.Find("Trail").GetComponent<RidersX.FX.BetterTrail>())
+
+                //find certain components
+
+                if (GameObject.FindObjectOfType<GearData>())
                 {
-                    trailName = GameObject.Find("Trail").GetComponent<RidersX.FX.BetterTrail>();
-                    trailRef = 1;
+                    gearDataRef = GameObject.FindObjectOfType<GearData>();
+                    gearDataRef.TrailLifeTimeTrick = 1f;
+                    gearDataRef.TrailLifeTimeNormal = 1f;
+                }
+                if (GameObject.FindObjectOfType<RidersX.FX.BetterTrail>())
+                {
+                    trailRef = GameObject.FindObjectOfType<RidersX.FX.BetterTrail>();
+                    trailEnabledStatus = 1;
 
                     if (GameObject.Find("BoardActivate"))
                     {
                         bActivate = GameObject.Find("BoardActivate");
                         bActivate.SetActive(false);
                     }
-
-
                     if (GameObject.Find("BoardDeactivate"))
                     {
                         bDeactivate = GameObject.Find("BoardDeactivate");
@@ -84,32 +100,53 @@ namespace CustomBoards
 
             }
 
-
-            if (trailRef == 1)
-            {
-                if (trailName.enabled == true)
-                {
-                    //this should trigger when starting race\
-                    trailRef = 0;
-                    bActivate.SetActive(true);
-                    bDeactivate.SetActive(false);
-
-                }
-
-            }
-
-
-
-
-
+            //proc start of race shenanigans, happens after 1st update
             if (counter[0] > counter[1])
             {
                 counter[1]++;
             }
+
+
+
+            //Transform proc
+            if (trailEnabledStatus == 1)
+            {
+                if (trailRef.enabled == true)
+                {
+                    //this should trigger when crossing starting line
+                    trailEnabledStatus = 0;
+                    bActivate.SetActive(true);
+                    bDeactivate.SetActive(false);
+                }
+            }
+
+            //Rainbow trail proc
+            if (Input.GetKeyDown("r"))
+            {
+                if (rainbowTrail == true)
+                {
+                    rainbowTrail = false;
+                }
+                else
+                {
+                    rainbowTrail = true;
+
+                }
+            }
+
+            if (rainbowTrail == true)
+            {
+                gearDataRef.SetTrailColor(new UnityEngine.Color((float)colorRand.NextDouble(), (float)colorRand.NextDouble(), (float)colorRand.NextDouble(), 1f));
+            }
+
+            //print proc
             if (Input.GetKeyDown("x"))
             {
                 AssetMain.printFunction();
             }
+
+
+
             //changes values to allow for menu board to change again
             if (sceneIndex == 0 && GameObject.Find("2D Gear"))
             {
@@ -130,10 +167,10 @@ namespace CustomBoards
         public void printFunction()
         {
             //Print all game objects in scene
-            Renderer[] tester = FindObjectsOfType<Renderer>();
+            GameObject[] tester = FindObjectsOfType<GameObject>();
             for (int i = 0; i < tester.Length; i++)
             {
-                MelonLogger.Msg(tester[i].gameObject.name);
+                MelonLogger.Msg(tester[i].name);
             }
         }
 
